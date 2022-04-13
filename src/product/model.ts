@@ -1,8 +1,34 @@
-import database from "../database/database";
-import { DataTypes } from "sequelize";
+import sequelizeConnection from "../database/database";
 
-const Product = database.define(
-  "product",
+import { DataTypes, Model, Optional } from "sequelize";
+
+interface ProductAttributes {
+  id: number;
+  price: number;
+  quantity: number;
+  name: string;
+  description: string;
+  image_url: string;
+  is_visible: boolean;
+  deletedAt?: Date;
+}
+export interface ProductInput extends Optional<ProductAttributes, "id"> {}
+export interface ProductOutput extends Required<ProductAttributes> {}
+
+export default class Product
+  extends Model<ProductAttributes, ProductInput>
+  implements ProductAttributes
+{
+  public id!: number;
+  public description!: string;
+  public name!: string;
+  public image_url!: string;
+  public quantity!: number;
+  public price!: number;
+  public is_visible!: boolean;
+}
+
+Product.init(
   {
     id: {
       autoIncrement: true,
@@ -37,6 +63,10 @@ const Product = database.define(
       defaultValue: true,
     },
   },
-  { timestamps: false }
+  {
+    tableName: "product",
+    timestamps: false,
+    sequelize: sequelizeConnection,
+    paranoid: true,
+  }
 );
-export default Product;
