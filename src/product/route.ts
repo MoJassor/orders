@@ -60,8 +60,71 @@ async function router(app: FastifyInstance) {
       const product = await productService.findProductById(
         req.params.productId
       );
-
+      if (!product)
+        return reply.code(404).send({ message: "product not found " });
       reply.code(200).send(product);
+    }
+  );
+
+  app.delete(
+    "/product/:productId",
+    { schema: productRoutesSchema.deleteProductSchema },
+
+    async (
+      req:
+        | FastifyRequest<{
+            Params: { productId: number };
+          }>
+        | any,
+      reply: FastifyReply
+    ) => {
+      if (!req.user.isManager)
+        return reply
+          .code(405)
+          .send({ message: "delete is allowed for admins just" });
+
+      const product = await productService.findProductById(
+        req.params.productId
+      );
+      if (!product)
+        return reply.code(404).send({ message: "product not found" });
+      await product.destroy({});
+      reply.code(200).send({ message: "product deleted" });
+    }
+  );
+
+  app.put(
+    "/product/:productId",
+    { schema: productRoutesSchema.updateProductSchema },
+
+    async (
+      req:
+        | FastifyRequest<{
+            Params: { productId: number };
+            Body: {
+              name?: string;
+              description?: string;
+              price?: number;
+              quantity?: number;
+              image_url?: string;
+              is_visible?: boolean;
+            };
+          }>
+        | any,
+      reply: FastifyReply
+    ) => {
+      if (!req.user.isManager)
+        return reply
+          .code(405)
+          .send({ message: "update is allowed for admins just" });
+
+      const product = await productService.findProductById(
+        req.params.productId
+      );
+      if (!product)
+        return reply.code(404).send({ message: "product not found" });
+      await product.update(req.body);
+      reply.code(200).send({ message: "product updated" });
     }
   );
 
