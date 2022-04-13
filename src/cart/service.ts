@@ -49,7 +49,7 @@ export default class CartService {
             model: CartItemAccessory,
             as: "productParts",
             attributes: ["id", "price", "quantity"],
-            include: { model: Accessory, as: "accessory" },
+            include: [{ model: Accessory, as: "accessory" }],
           },
           {
             model: Product,
