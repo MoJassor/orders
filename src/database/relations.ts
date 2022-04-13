@@ -12,17 +12,21 @@ export default () => {
   CartItem.belongsTo(Product, { as: "product" });
 
   CartItem.belongsTo(Cart, { as: "cart", foreignKey: "cartId" });
+
   Cart.hasMany(CartItem, { as: "cartItem", foreignKey: "cartId" });
 
-  CartItemAccessory.belongsTo(Accessory);
+  CartItemAccessory.belongsTo(Accessory, { as: "accessory", foreignKey: "id" });
 
-  CartItemAccessory.belongsTo(CartItem);
+  CartItemAccessory.belongsTo(CartItem, { as: "cartItem" });
+
   CartItem.hasMany(CartItemAccessory, {
     as: "productParts",
     foreignKey: "cartItemId",
   });
 
   Accessory.belongsTo(Product, { as: "product" });
+
   Product.belongsTo(Category, { as: "category" });
-  Product.hasMany(Accessory);
+
+  Product.hasMany(Accessory, { as: "accessories", foreignKey: "id" });
 };
