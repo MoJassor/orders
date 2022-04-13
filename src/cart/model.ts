@@ -26,6 +26,7 @@ Cart.init(
     },
   },
   {
+    tableName: "cart",
     timestamps: false,
     sequelize: sequelizeConnection,
     paranoid: true,
