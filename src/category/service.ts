@@ -12,7 +12,7 @@ export default class CategoryService {
   public findCategoryByOptions = async (options: any) => {
     return await Category.findOne(options);
   };
-  public findCategoryById = async (_id: number) => {
-    return await Category.findByPk(_id);
+  public findCategoryById = async (id: number) => {
+    return await Category.findByPk(id);
   };
 }

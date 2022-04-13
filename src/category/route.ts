@@ -10,8 +10,69 @@ async function router(app: FastifyInstance) {
     "/category",
     { schema: categoryRouteSchema.getAllCategoriesSchema },
     async (req: FastifyRequest, reply: FastifyReply) => {
-      const categories = await categoryService.findCategoriesByOptions();
+      const categories = await categoryService.findCategoriesByOptions({
+        where: { is_visible: true },
+      });
       reply.send(categories);
+    }
+  );
+
+  app.delete(
+    "/category/:categoryId",
+    { schema: categoryRouteSchema.deleteCategorySchema },
+
+    async (
+      req:
+        | FastifyRequest<{
+            Params: { categoryId: number };
+          }>
+        | any,
+      reply: FastifyReply
+    ) => {
+      if (!req.user.isManager)
+        return reply
+          .code(405)
+          .send({ message: "delete is allowed for admins just" });
+
+      const category = await categoryService.findCategoryById(
+        req.params.categoryId
+      );
+      if (!category)
+        return reply.code(404).send({ message: "category not found" });
+      await category.destroy({});
+      reply.code(200).send({ message: "category deleted" });
+    }
+  );
+
+  app.put(
+    "/category/:categoryId",
+    { schema: categoryRouteSchema.updateCategorySchema },
+
+    async (
+      req:
+        | FastifyRequest<{
+            Params: { categoryId: number };
+            Body: {
+              title?: string;
+              image_url?: string;
+              is_visible?: boolean;
+            };
+          }>
+        | any,
+      reply: FastifyReply
+    ) => {
+      if (!req.user.isManager)
+        return reply
+          .code(405)
+          .send({ message: "update is allowed for admins just" });
+
+      const category = await categoryService.findCategoryById(
+        req.params.categoryId
+      );
+      if (!category)
+        return reply.code(404).send({ message: "category not found" });
+      await category.update(req.body);
+      reply.code(200).send({ message: "category updated" });
     }
   );
 

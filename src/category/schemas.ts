@@ -35,35 +35,29 @@ export default {
     },
   },
 
-  updateProductSchema: {
+  updateCategorySchema: {
+    summary: "Update Category info",
+    description:
+      "you can update category title, image_url and is_visible attributes",
     tags: ["Category"],
     params: {
       type: "object",
-      required: ["employeeId"],
+      required: ["categoryId"],
       properties: {
-        employeeId: { type: "string", example: "612cf43bf433f84ea435d59e" },
+        categoryId: { type: "number" },
       },
     },
     body: {
       type: "object",
       properties: {
-        fullName: {
+        title: {
           type: "string",
         },
-        password: {
+        image_url: {
           type: "string",
         },
-        phone: {
-          type: "string",
-        },
-        email: {
-          type: "string",
-        },
-        permissions: {
-          type: "array",
-          items: {
-            type: "string",
-          },
+        is_visible: {
+          type: "boolean",
         },
       },
     },
@@ -71,6 +65,30 @@ export default {
       200: { message: { type: "string", example: "Updated" } },
       400: { message: { type: "string", example: "Bad request" } },
       401: { message: { type: "string", example: "unauthorized" } },
+      404: { message: { type: "string", example: "not found" } },
+      403: { message: { type: "string", example: "Forbidden" } },
+      500: {
+        message: { type: "string", example: "internal server error" },
+      },
+    },
+  },
+  deleteCategorySchema: {
+    summary: "Delete Category info",
+    description: "you can delete category if you are an administrator",
+    tags: ["Category"],
+    params: {
+      type: "object",
+      required: ["categoryId"],
+      properties: {
+        categoryId: { type: "number" },
+      },
+    },
+
+    response: {
+      200: { message: { type: "string", example: "De" } },
+      400: { message: { type: "string", example: "Bad request" } },
+      401: { message: { type: "string", example: "unauthorized" } },
+      404: { message: { type: "string", example: "not found" } },
       403: { message: { type: "string", example: "Forbidden" } },
       500: {
         message: { type: "string", example: "internal server error" },
