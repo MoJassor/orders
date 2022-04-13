@@ -51,6 +51,7 @@ Accessory.init(
     },
   },
   {
+    tableName: "accessory",
     timestamps: false,
     sequelize: sequelizeConnection,
     paranoid: true,
