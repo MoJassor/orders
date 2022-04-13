@@ -13,9 +13,6 @@ export default class CartItemAccessoryService {
     return await CartItemAccessory.findOne(options);
   };
   public findCartItemAccessoryById = async (_id: number) => {
-    return await CartItemAccessory.findById(_id);
-  };
-  public updateCartItemAccessoryInfo = async (_id: string, options: any) => {
-    return await CartItemAccessory.findByIdAndUpdate(_id, options);
+    return await CartItemAccessory.findByPk(_id);
   };
 }
