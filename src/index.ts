@@ -54,9 +54,8 @@ app.listen(
       process.exit(1);
     }
     initRelations();
-    await connecter.sync();
-    const ss = (app as any).swagger();
-    console.log(ss);
+    await connecter.sync({ force: false });
+    (app as any).swagger();
 
     console.log(`Server listening at ${address}`);
   }
