@@ -1,8 +1,22 @@
-import database from "../database/database";
-import { DataTypes } from "sequelize";
+import sequelizeConnection from "../database/database";
 
-const Cart = database.define(
-  "cart",
+import { DataTypes, Model, Optional } from "sequelize";
+
+interface CartAttributes {
+  id: number;
+  deletedAt?: Date;
+}
+export interface CartInput extends Optional<CartAttributes, "id"> {}
+export interface CartOutput extends Required<CartAttributes> {}
+
+export default class Cart
+  extends Model<CartAttributes, CartInput>
+  implements CartAttributes
+{
+  public id!: number;
+}
+
+Cart.init(
   {
     id: {
       autoIncrement: true,
@@ -11,6 +25,9 @@ const Cart = database.define(
       primaryKey: true,
     },
   },
-  { timestamps: false }
+  {
+    timestamps: false,
+    sequelize: sequelizeConnection,
+    paranoid: true,
+  }
 );
-export default Cart;
