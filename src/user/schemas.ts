@@ -91,6 +91,9 @@ export default {
   },
 
   loginUserSchema: {
+    summary: "login into the system",
+    description:
+      "you can do whatever you want if you enter a phone number and correct password",
     tags: ["User"],
     body: {
       type: "object",
@@ -121,6 +124,8 @@ export default {
   },
 
   getAllUsersSchema: {
+    summary: "see all users",
+    description: "you can see all users info but you should be an admin",
     tags: ["User"],
     response: {
       200: {
@@ -136,6 +141,41 @@ export default {
           },
         },
       },
+
+      400: { message: { type: "string", example: "Bad request" } },
+      401: { message: { type: "string", example: "unauthorized" } },
+      403: { message: { type: "string", example: "Forbidden" } },
+      405: { message: { type: "string", example: "Method not allowed" } },
+
+      500: {
+        message: { type: "string", example: "internal server error" },
+      },
+    },
+  },
+  getOneUserSchema: {
+    summary: "see one user",
+    description: "you can see all user's info  but you should be an admin",
+    tags: ["User"],
+    params: {
+      type: "object",
+      required: ["userId"],
+      properties: { userId: { type: "number" } },
+    },
+    response: {
+      200: {
+        description: "Successful response",
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            name: { type: "string" },
+            phone: { type: "string" },
+            id: { type: "number" },
+            is_manager: { type: "boolean" },
+          },
+        },
+      },
+      405: { message: { type: "string", example: "Method not allowed" } },
       400: { message: { type: "string", example: "Bad request" } },
       401: { message: { type: "string", example: "unauthorized" } },
       403: { message: { type: "string", example: "Forbidden" } },

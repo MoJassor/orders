@@ -56,6 +56,7 @@ async function router(app: FastifyInstance) {
           const existAccessory = await accessoryService.findAccessoryById(
             accessory.accessoryId
           );
+          if (!existAccessory) continue;
           await cartItemAccessoryService.addCartItemAccessory({
             accessoryId: accessory.accessoryId,
             quantity: accessory.quantity,
@@ -107,8 +108,6 @@ async function router(app: FastifyInstance) {
       const carts = await cartService.findCartsByOptions({
         where: { userId: req.user.id },
       });
-      console.log(carts);
-
       reply.send(carts);
     }
   );

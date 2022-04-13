@@ -11,15 +11,19 @@ async function router(app: FastifyInstance) {
   app.get(
     "/user",
     { schema: userRoutesSchema.getAllUsersSchema, preValidation: verify },
-    async (req: FastifyRequest, reply: FastifyReply) => {
+    async (req: FastifyRequest | any, reply: FastifyReply) => {
+      if (!req.user.isManager)
+        return reply.code(405).send({ message: "method not allowed" });
       const users = await userService.findUsersByOptions();
       reply.send(users);
     }
   );
   app.get(
     "/user/:userId",
-    { schema: userRoutesSchema.getAllUsersSchema, preValidation: verify },
+    { schema: userRoutesSchema.getOneUserSchema, preValidation: verify },
     async (req: FastifyRequest | any, reply: FastifyReply) => {
+      if (!req.user.isManager)
+        return reply.code(405).send({ message: "method not allowed" });
       const user = await userService.findUserById(req.params.userId);
       reply.send({ user });
     }
@@ -78,7 +82,8 @@ async function router(app: FastifyInstance) {
           expiresIn: "2d",
         }
       );
-      delete newUser.dataValues.password;
+      //@ts-ignore
+      delete newUser.password;
       reply.send({ newUser, token });
     }
   );
