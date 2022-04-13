@@ -1,8 +1,30 @@
-import database from "../database/database";
-import { DataTypes } from "sequelize";
+import sequelizeConnection from "../database/database";
 
-const Accessory = database.define(
-  "accessory",
+import { DataTypes, Model, Optional } from "sequelize";
+
+interface AccessoryAttributes {
+  id: number;
+  name: string;
+  description: string;
+  image_url: string;
+  price: number;
+  deletedAt?: Date;
+}
+export interface AccessoryInput extends Optional<AccessoryAttributes, "id"> {}
+export interface AccessoryOutput extends Required<AccessoryAttributes> {}
+
+export default class Accessory
+  extends Model<AccessoryAttributes, AccessoryInput>
+  implements AccessoryAttributes
+{
+  public id!: number;
+  public name!: string;
+  public description!: string;
+  public image_url!: string;
+  public price!: number;
+}
+
+Accessory.init(
   {
     id: {
       autoIncrement: true,
@@ -28,6 +50,9 @@ const Accessory = database.define(
       allowNull: false,
     },
   },
-  { timestamps: false }
+  {
+    timestamps: false,
+    sequelize: sequelizeConnection,
+    paranoid: true,
+  }
 );
-export default Accessory;
