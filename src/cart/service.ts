@@ -16,16 +16,19 @@ export default class CartService {
         model: CartItem,
         as: "cartItem",
         attributes: ["id", "price", "quantity"],
+        paranoid: false,
         include: [
           {
             model: CartItemAccessory,
             as: "productParts",
             attributes: ["id", "price", "quantity"],
-            include: { model: Accessory, as: "accessory" },
+            paranoid: false,
+            include: { model: Accessory, as: "accessory", paranoid: false },
           },
           {
             model: Product,
             as: "product",
+            paranoid: false,
             attributes: ["id", "name", "image_url"],
           },
         ],
