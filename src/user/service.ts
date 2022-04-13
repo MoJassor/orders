@@ -13,6 +13,6 @@ export default class UserService {
     return await User.findOne(options);
   };
   public findUserById = async (_id: number) => {
-    return await User.findById(_id);
+    return await User.findByPk(_id);
   };
 }
