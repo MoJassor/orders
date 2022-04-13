@@ -76,4 +76,67 @@ export default {
       },
     },
   },
+  updateAccessorySchema: {
+    summary: "Update accessory info",
+    description:
+      "you can update accessory name,description,price and image_url attributes",
+    tags: ["Accessory"],
+    params: {
+      type: "object",
+      required: ["accessoryId"],
+      properties: {
+        accessoryId: { type: "number" },
+      },
+    },
+    body: {
+      type: "object",
+      properties: {
+        name: {
+          type: "string",
+        },
+        image_url: {
+          type: "string",
+        },
+        description: {
+          type: "string",
+        },
+        price: {
+          type: "number",
+        },
+      },
+    },
+    response: {
+      200: { message: { type: "string", example: "Updated" } },
+      400: { message: { type: "string", example: "Bad request" } },
+      401: { message: { type: "string", example: "unauthorized" } },
+      404: { message: { type: "string", example: "not found" } },
+      403: { message: { type: "string", example: "Forbidden" } },
+      500: {
+        message: { type: "string", example: "internal server error" },
+      },
+    },
+  },
+  deleteAccessorySchema: {
+    summary: "Delete accessory ",
+    description: "you can delete accessory if you are an administrator",
+    tags: ["Accessory"],
+    params: {
+      type: "object",
+      required: ["accessoryId"],
+      properties: {
+        accessoryId: { type: "number" },
+      },
+    },
+
+    response: {
+      200: { message: { type: "string", example: "Deleted" } },
+      400: { message: { type: "string", example: "Bad request" } },
+      401: { message: { type: "string", example: "unauthorized" } },
+      404: { message: { type: "string", example: "not found" } },
+      403: { message: { type: "string", example: "Forbidden" } },
+      500: {
+        message: { type: "string", example: "internal server error" },
+      },
+    },
+  },
 };
