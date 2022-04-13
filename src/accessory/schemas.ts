@@ -50,7 +50,7 @@ export default {
       type: "object",
       required: ["productId"],
       properties: {
-        productId: { type: "number", example: 1 },
+        productId: { type: "number" },
       },
     },
     response: {
