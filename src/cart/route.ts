@@ -95,20 +95,14 @@ async function router(app: FastifyInstance) {
     "/myCart",
     { schema: cartRouteSchema.getMyCartSchema },
     async (
-      req:
-        | FastifyRequest<{
-            Body: {
-              password: string;
-            };
-          }>
-        | any,
+      req: FastifyRequest | any,
 
       reply: FastifyReply
     ) => {
       const carts = await cartService.findCartsByOptions({
         where: { userId: req.user.id },
       });
-      reply.send(carts);
+      reply.code(200).send(carts);
     }
   );
 }

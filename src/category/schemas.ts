@@ -73,7 +73,7 @@ export default {
     },
   },
   deleteCategorySchema: {
-    summary: "Delete Category info",
+    summary: "Delete Category",
     description: "you can delete category if you are an administrator",
     tags: ["Category"],
     params: {
@@ -85,7 +85,7 @@ export default {
     },
 
     response: {
-      200: { message: { type: "string", example: "De" } },
+      200: { message: { type: "string", example: "Delete" } },
       400: { message: { type: "string", example: "Bad request" } },
       401: { message: { type: "string", example: "unauthorized" } },
       404: { message: { type: "string", example: "not found" } },

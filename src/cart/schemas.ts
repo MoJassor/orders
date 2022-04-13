@@ -205,7 +205,7 @@ export default {
                             image_url: { type: "string" },
                           },
                         },
-                        quantity: { type: "string" },
+                        quantity: { type: "number" },
                         price: { type: "number" },
                       },
                     },
