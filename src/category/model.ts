@@ -1,8 +1,28 @@
-import database from "../database/database";
-import { DataTypes } from "sequelize";
+import sequelizeConnection from "../database/database";
 
-const Category = database.define(
-  "category",
+import { DataTypes, Model, Optional } from "sequelize";
+
+interface CategoryAttributes {
+  id: number;
+  title: string;
+  image_url: string;
+  is_visible: boolean;
+  deletedAt?: Date;
+}
+export interface CategoryInput extends Optional<CategoryAttributes, "id"> {}
+export interface CategoryOutput extends Required<CategoryAttributes> {}
+
+export default class Category
+  extends Model<CategoryAttributes, CategoryInput>
+  implements CategoryAttributes
+{
+  public id!: number;
+  public title!: string;
+  public image_url!: string;
+  public is_visible!: boolean;
+}
+
+Category.init(
   {
     id: {
       autoIncrement: true,
@@ -25,6 +45,10 @@ const Category = database.define(
       defaultValue: true,
     },
   },
-  { timestamps: false }
+  {
+    tableName: "category",
+    timestamps: false,
+    sequelize: sequelizeConnection,
+    paranoid: true,
+  }
 );
-export default Category;
