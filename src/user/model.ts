@@ -1,8 +1,30 @@
-import database from "../database/database";
-import { DataTypes } from "sequelize";
+import sequelizeConnection from "../database/database";
 
-const User = database.define(
-  "user",
+import { DataTypes, Model, Optional } from "sequelize";
+
+interface UserAttributes {
+  id: number;
+  name: string;
+  password: string;
+  phone: string;
+  is_manager: boolean;
+  deletedAt?: Date;
+}
+export interface UserInput extends Optional<UserAttributes, "id"> {}
+export interface UserOutput extends Required<UserAttributes> {}
+
+export default class User
+  extends Model<UserAttributes, UserInput>
+  implements UserAttributes
+{
+  public id!: number;
+  public name!: string;
+  public password!: string;
+  public phone!: string;
+  public is_manager!: boolean;
+}
+
+User.init(
   {
     id: {
       autoIncrement: true,
@@ -29,6 +51,9 @@ const User = database.define(
       defaultValue: false,
     },
   },
-  { timestamps: false }
+  {
+    timestamps: false,
+    sequelize: sequelizeConnection,
+    paranoid: true,
+  }
 );
-export default User;
