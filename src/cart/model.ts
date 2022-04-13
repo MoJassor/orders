@@ -27,7 +27,7 @@ Cart.init(
   },
   {
     tableName: "cart",
-    timestamps: false,
+    timestamps: true,
     sequelize: sequelizeConnection,
     paranoid: true,
   }

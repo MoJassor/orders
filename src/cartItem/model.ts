@@ -40,7 +40,7 @@ CartItem.init(
   },
   {
     tableName: "cartItem",
-    timestamps: false,
+    timestamps: true,
     sequelize: sequelizeConnection,
     paranoid: true,
   }

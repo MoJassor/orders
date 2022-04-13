@@ -47,7 +47,7 @@ Category.init(
   },
   {
     tableName: "category",
-    timestamps: false,
+    timestamps: true,
     sequelize: sequelizeConnection,
     paranoid: true,
   }

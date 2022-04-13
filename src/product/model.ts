@@ -65,7 +65,7 @@ Product.init(
   },
   {
     tableName: "product",
-    timestamps: false,
+    timestamps: true,
     sequelize: sequelizeConnection,
     paranoid: true,
   }

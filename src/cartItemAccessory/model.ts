@@ -41,7 +41,7 @@ CartItemAccessory.init(
   },
   {
     tableName: "cartItemAccessory",
-    timestamps: false,
+    timestamps: true,
     sequelize: sequelizeConnection,
     paranoid: true,
   }

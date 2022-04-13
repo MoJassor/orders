@@ -52,7 +52,7 @@ Accessory.init(
   },
   {
     tableName: "accessory",
-    timestamps: false,
+    timestamps: true,
     sequelize: sequelizeConnection,
     paranoid: true,
   }
