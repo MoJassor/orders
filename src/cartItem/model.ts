@@ -1,8 +1,26 @@
-import database from "../database/database";
-import { DataTypes } from "sequelize";
+import sequelizeConnection from "../database/database";
 
-const CartItem = database.define(
-  "cartItem",
+import { DataTypes, Model, Optional } from "sequelize";
+
+interface CartItemAttributes {
+  id: number;
+  quantity: number;
+  price: number;
+  deletedAt?: Date;
+}
+export interface CartItemInput extends Optional<CartItemAttributes, "id"> {}
+export interface CartItemOutput extends Required<CartItemAttributes> {}
+
+export default class CartItem
+  extends Model<CartItemAttributes, CartItemInput>
+  implements CartItemAttributes
+{
+  public id!: number;
+  public quantity!: number;
+  public price!: number;
+}
+
+CartItem.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -20,6 +38,10 @@ const CartItem = database.define(
       allowNull: false,
     },
   },
-  { timestamps: false }
+  {
+    tableName: "cartItem",
+    timestamps: false,
+    sequelize: sequelizeConnection,
+    paranoid: true,
+  }
 );
-export default CartItem;
