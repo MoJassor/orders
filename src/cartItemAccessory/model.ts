@@ -4,8 +4,8 @@ import { DataTypes, Model, Optional } from "sequelize";
 
 interface CartItemAccessoryAttributes {
   id: number;
-  quantity: number;
-  price: number;
+  partQuantity: number;
+  partPrice: number;
   deletedAt?: Date;
 }
 export interface CartItemAccessoryInput
@@ -18,8 +18,8 @@ export default class CartItemAccessory
   implements CartItemAccessoryAttributes
 {
   public id!: number;
-  public quantity!: number;
-  public price!: number;
+  public partQuantity!: number;
+  public partPrice!: number;
 }
 
 CartItemAccessory.init(
@@ -30,11 +30,11 @@ CartItemAccessory.init(
       allowNull: false,
       primaryKey: true,
     },
-    quantity: {
+    partQuantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    price: {
+    partPrice: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
