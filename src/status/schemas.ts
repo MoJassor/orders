@@ -25,6 +25,59 @@ export default {
       },
     },
   },
+  updateStatusSchema: {
+    summary: "Update Status info",
+    description: "you can update status title attribute",
+    tags: ["Status"],
+    params: {
+      type: "object",
+      required: ["statusId"],
+      properties: {
+        statusId: { type: "number" },
+      },
+    },
+    body: {
+      type: "object",
+      properties: {
+        title: {
+          type: "string",
+        },
+      },
+    },
+    response: {
+      200: { message: { type: "string", example: "Updated" } },
+      400: { message: { type: "string", example: "Bad request" } },
+      401: { message: { type: "string", example: "unauthorized" } },
+      404: { message: { type: "string", example: "not found" } },
+      403: { message: { type: "string", example: "Forbidden" } },
+      500: {
+        message: { type: "string", example: "internal server error" },
+      },
+    },
+  },
+  deleteStatusSchema: {
+    summary: "Delete Status",
+    description: "you can delete status if you are an administrator",
+    tags: ["Status"],
+    params: {
+      type: "object",
+      required: ["statusId"],
+      properties: {
+        statusId: { type: "number" },
+      },
+    },
+
+    response: {
+      200: { message: { type: "string", example: "Delete" } },
+      400: { message: { type: "string", example: "Bad request" } },
+      401: { message: { type: "string", example: "unauthorized" } },
+      404: { message: { type: "string", example: "not found" } },
+      403: { message: { type: "string", example: "Forbidden" } },
+      500: {
+        message: { type: "string", example: "internal server error" },
+      },
+    },
+  },
 
   getAllStatusesSchema: {
     summary: "see all statuses",
