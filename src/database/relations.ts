@@ -4,10 +4,12 @@ import Category from "../category/model";
 import Product from "../product/model";
 import Accessory from "../accessory/model";
 import User from "../user/model";
+import Statues from "../status/model";
 import CartItemAccessory from "../cartItemAccessory/model";
 
 export default () => {
   Cart.belongsTo(User, { as: "user" });
+  Cart.belongsTo(Statues, { as: "statues" });
 
   CartItem.belongsTo(Product, { as: "product" });
 
