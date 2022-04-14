@@ -30,12 +30,14 @@ import userRoutes from "./user/route";
 import accessoryRoutes from "./accessory/route";
 import initRelations from "./database/relations";
 import cartRoutes from "./cart/route";
+import statusRoutes from "./status/route";
 
-app.register(userRoutes);
-app.register(accessoryRoutes);
-app.register(cartRoutes);
-app.register(productRoutes);
-app.register(categoryRoutes);
+app.register(userRoutes, { prefix: "api" });
+app.register(accessoryRoutes, { prefix: "api" });
+app.register(cartRoutes, { prefix: "api" });
+app.register(productRoutes, { prefix: "api" });
+app.register(categoryRoutes, { prefix: "api" });
+app.register(statusRoutes, { prefix: "api" });
 // app.register(helmet, { global: false });
 
 app.setErrorHandler((error: any, request, reply) => {
