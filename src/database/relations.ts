@@ -30,5 +30,7 @@ export default () => {
 
   Product.belongsTo(Category, { as: "category" });
 
+  Category.hasMany(Product, { foreignKey: "categoryId" });
+
   Product.hasMany(Accessory, { as: "accessories", foreignKey: "id" });
 };

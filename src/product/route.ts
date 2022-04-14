@@ -4,6 +4,9 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { Op } from "sequelize";
 import productRoutesSchema from "./schemas";
 import { verify } from "../utilize/token.service";
+import CategoryService from "../category/service";
+
+const categoryService = new CategoryService();
 const productService = new ProductService();
 
 async function router(app: FastifyInstance) {
@@ -134,8 +137,12 @@ async function router(app: FastifyInstance) {
     async (req: FastifyRequest | any, reply: FastifyReply) => {
       if (!req.user.isManager)
         return reply.code(405).send({ message: "sorry! you're not an admin" });
-
-      await productService.addProduct(req.body);
+      const category = await categoryService.findCategoryById(
+        req.body.categoryId
+      );
+      if (!category) return reply.code(404).send({ message: "not found" });
+      delete req.body.categoryId;
+      await (category as any).createProduct(req.body);
       reply.code(201).send({ message: "created" });
     }
   );
