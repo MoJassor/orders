@@ -4,8 +4,8 @@ import { DataTypes, Model, Optional } from "sequelize";
 
 interface CartItemAttributes {
   id: number;
-  quantity: number;
-  price: number;
+  productQuantity: number;
+  productPrice: number;
   deletedAt?: Date;
 }
 export interface CartItemInput extends Optional<CartItemAttributes, "id"> {}
@@ -16,8 +16,8 @@ export default class CartItem
   implements CartItemAttributes
 {
   public id!: number;
-  public quantity!: number;
-  public price!: number;
+  public productQuantity!: number;
+  public productPrice!: number;
 }
 
 CartItem.init(
@@ -28,12 +28,12 @@ CartItem.init(
       allowNull: false,
       primaryKey: true,
     },
-    quantity: {
+    productQuantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
 
-    price: {
+    productPrice: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
