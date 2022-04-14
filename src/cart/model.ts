@@ -5,6 +5,9 @@ import { DataTypes, Model, Optional } from "sequelize";
 interface CartAttributes {
   id: number;
   deletedAt?: Date;
+  address: string;
+  statuesId?: number;
+  totalPrice?: number;
 }
 export interface CartInput extends Optional<CartAttributes, "id"> {}
 export interface CartOutput extends Required<CartAttributes> {}
@@ -14,6 +17,8 @@ export default class Cart
   implements CartAttributes
 {
   public id!: number;
+  public address!: string;
+  public totalPrice!: number;
 }
 
 Cart.init(
@@ -23,6 +28,15 @@ Cart.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    totalPrice: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 0,
     },
   },
   {
