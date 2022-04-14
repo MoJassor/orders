@@ -6,7 +6,7 @@ import cartRouteSchema from "./schemas";
 import { verify } from "../utilize/token.service";
 import CartItemAccessoryService from "../cartItemAccessory/service";
 import AccessoryService from "../accessory/service";
-import { Op } from "sequelize";
+import { Op, Sequelize } from "sequelize";
 import Product from "../product/model";
 import CartItemAccessory from "../cartItemAccessory/model";
 import Accessory from "../accessory/model";
@@ -92,17 +92,38 @@ async function router(app: FastifyInstance) {
         | any,
       reply: FastifyReply
     ) => {
-      const cart = await cartService.findCartByPk(req.user.id);
+      const cart = await cartService.findCartByOptions({
+        where: { id: req.params.cartId, userId: req.user.id },
+
+        include: [
+          {
+            model: CartItem,
+            as: "cartItem",
+          },
+        ],
+      });
       if (!cart) return reply.code(404).send({ message: "not found" });
       if (req.body.amount < cart.totalPrice)
-        return reply.code(405).send({ message: "not found" });
+        return reply
+          .code(405)
+          .send({ message: "you should to pay the total price" });
 
+      for (const cartItem of (cart as any).cartItem) {
+        await Product.update(
+          {
+            quantity: Sequelize.literal(
+              `quantity - ${cartItem.productQuantity}`
+            ),
+          },
+          { where: { id: cartItem.productId } }
+        );
+      }
       await cart.update({
         address: req.body.address,
         statuesId: 2,
       });
 
-      reply.send({ message: "added to your orders" });
+      reply.code(200).send({ message: "added to your orders" });
     }
   );
 
@@ -176,7 +197,7 @@ async function router(app: FastifyInstance) {
         | any,
       reply: FastifyReply
     ) => {
-      const cart = await cartService.findCartsByOptions({
+      const cart = await cartService.findCartByOptions({
         where: { id: req.params.cartId, userId: req.user.id },
         attributes: {
           exclude: ["updatedAt", "deletedAt", "userId", "statuesId", "address"],
@@ -217,7 +238,9 @@ async function router(app: FastifyInstance) {
         ],
       });
       if (!cart) return reply.code(404).send({ message: "Cart not found" });
-      reply.code(200).send(cart[0]);
+      console.log(cart);
+
+      reply.code(200).send(cart);
     }
   );
 

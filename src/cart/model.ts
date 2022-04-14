@@ -34,7 +34,7 @@ Cart.init(
       allowNull: true,
     },
     totalPrice: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
     },
