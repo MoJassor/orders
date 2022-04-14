@@ -25,7 +25,7 @@ async function router(app: FastifyInstance) {
       if (!req.user.isManager)
         return reply.code(405).send({ message: "method not allowed" });
       const user = await userService.findUserById(req.params.userId);
-      reply.send({ user });
+      reply.send(user);
     }
   );
   app.post(

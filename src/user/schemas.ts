@@ -164,15 +164,12 @@ export default {
     response: {
       200: {
         description: "Successful response",
-        type: "array",
-        items: {
-          type: "object",
-          properties: {
-            name: { type: "string" },
-            phone: { type: "string" },
-            id: { type: "number" },
-            is_manager: { type: "boolean" },
-          },
+        type: "object",
+        properties: {
+          name: { type: "string" },
+          phone: { type: "string" },
+          id: { type: "number" },
+          is_manager: { type: "boolean" },
         },
       },
       405: { message: { type: "string", example: "Method not allowed" } },
