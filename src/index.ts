@@ -18,10 +18,7 @@ app.register(CORS, {
   allowedHeaders: ["Content-Type", "Authorization"],
 });
 
-app.register(rateLimit, {
-  max: 100,
-  timeWindow: "1 minute",
-});
+app.register(rateLimit, { max: 30, timeWindow: "1 minute" });
 
 import connecter from "./database/database";
 import categoryRoutes from "./category/route";
