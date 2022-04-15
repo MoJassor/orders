@@ -1,17 +1,39 @@
-import Fastify from "fastify";
+import Fastify, {
+  DoneFuncWithErrOrRes,
+  FastifyReply,
+  FastifyRequest,
+} from "fastify";
 import env from "dotenv";
 env.config();
-import * as fastifySwagger from "fastify-swagger";
+import fastifySwagger from "fastify-swagger";
 import swaggerOptions from "./config/swagger.docs";
 // import helmet from "fastify-helmet";
+import CORS from "fastify-cors";
 import rateLimit from "fastify-rate-limit";
 const app = Fastify({
   logger: {
     level: "info",
   },
 });
-app.register(fastifySwagger as any, swaggerOptions);
-import CORS from "fastify-cors";
+app.register(fastifySwagger as any, {
+  ...swaggerOptions,
+  uiHooks: {
+    onRequest: (
+      request: FastifyRequest,
+      reply: FastifyReply,
+      done: DoneFuncWithErrOrRes
+    ) => {
+      done();
+    },
+    preHandler: (
+      request: FastifyRequest,
+      reply: FastifyReply,
+      done: DoneFuncWithErrOrRes
+    ) => {
+      done();
+    },
+  },
+});
 app.register(CORS, {
   origin: true,
   methods: ["OPTIONS", "PUT", "GET", "POST", "DELETE"],
