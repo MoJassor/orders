@@ -52,9 +52,17 @@ User.init(
     },
   },
   {
-    tableName: "user",
+    tableName: "users",
     timestamps: true,
     sequelize: sequelizeConnection,
     paranoid: true,
+    indexes: [
+      {
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [{ name: "phone" }],
+      },
+    ],
   }
 );
