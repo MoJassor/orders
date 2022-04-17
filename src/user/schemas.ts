@@ -47,49 +47,6 @@ export default {
     },
   },
 
-  updateUserSchema: {
-    tags: ["User"],
-    params: {
-      type: "object",
-      required: ["employeeId"],
-      properties: {
-        employeeId: { type: "string", example: "612cf43bf433f84ea435d59e" },
-      },
-    },
-    body: {
-      type: "object",
-      properties: {
-        fullName: {
-          type: "string",
-        },
-        password: {
-          type: "string",
-        },
-        phone: {
-          type: "string",
-        },
-        email: {
-          type: "string",
-        },
-        permissions: {
-          type: "array",
-          items: {
-            type: "string",
-          },
-        },
-      },
-    },
-    response: {
-      200: { message: { type: "string", example: "Updated" } },
-      400: { message: { type: "string", example: "Bad request" } },
-      401: { message: { type: "string", example: "unauthorized" } },
-      403: { message: { type: "string", example: "Forbidden" } },
-      500: {
-        message: { type: "string", example: "internal server error" },
-      },
-    },
-  },
-
   loginUserSchema: {
     summary: "login into the system",
     description:
@@ -122,7 +79,119 @@ export default {
       },
     },
   },
+  updateUserSchema: {
+    summary: "Update User info",
+    description: "you can make a normal user an admin",
+    tags: ["User"],
+    params: {
+      type: "object",
+      required: ["userId"],
+      properties: {
+        userId: { type: "number" },
+      },
+    },
+    body: {
+      type: "object",
+      properties: {
+        is_manager: {
+          type: "boolean",
+        },
+      },
+      additionalProperties: false,
+    },
+    response: {
+      200: { message: { type: "string", example: "Updated" } },
+      400: { message: { type: "string", example: "Bad request" } },
+      401: { message: { type: "string", example: "unauthorized" } },
+      404: { message: { type: "string", example: "not found" } },
+      403: { message: { type: "string", example: "Forbidden" } },
+      500: {
+        message: { type: "string", example: "internal server error" },
+      },
+    },
+  },
 
+  updateUserProfileSchema: {
+    summary: "Update profile",
+    description:
+      "you can update your profile like your name, password and image_url attributes",
+    tags: ["User"],
+    body: {
+      type: "object",
+      properties: {
+        image_url: {
+          type: "string",
+        },
+        name: {
+          type: "string",
+        },
+        password: {
+          type: "string",
+        },
+      },
+      additionalProperties: false,
+    },
+    response: {
+      200: { message: { type: "string", example: "Updated" } },
+      400: { message: { type: "string", example: "Bad request" } },
+      401: { message: { type: "string", example: "unauthorized" } },
+      404: { message: { type: "string", example: "not found" } },
+      403: { message: { type: "string", example: "Forbidden" } },
+      500: {
+        message: { type: "string", example: "internal server error" },
+      },
+    },
+  },
+
+  deleteUserSchema: {
+    summary: "Delete User",
+    description: "you can delete user if you are an administrator",
+    tags: ["User"],
+    params: {
+      type: "object",
+      required: ["userId"],
+      properties: {
+        userId: { type: "number" },
+      },
+    },
+
+    response: {
+      200: { message: { type: "string", example: "Delete" } },
+      400: { message: { type: "string", example: "Bad request" } },
+      401: { message: { type: "string", example: "unauthorized" } },
+      404: { message: { type: "string", example: "not found" } },
+      403: { message: { type: "string", example: "Forbidden" } },
+      500: {
+        message: { type: "string", example: "internal server error" },
+      },
+    },
+  },
+  getMyProfileSchema: {
+    summary: "see your profile info",
+    tags: ["User"],
+    response: {
+      200: {
+        description: "Successful response",
+
+        type: "object",
+        properties: {
+          name: { type: "string" },
+          phone: { type: "string" },
+          id: { type: "number" },
+          is_manager: { type: "boolean" },
+        },
+      },
+
+      400: { message: { type: "string", example: "Bad request" } },
+      401: { message: { type: "string", example: "unauthorized" } },
+      403: { message: { type: "string", example: "Forbidden" } },
+      405: { message: { type: "string", example: "Method not allowed" } },
+
+      500: {
+        message: { type: "string", example: "internal server error" },
+      },
+    },
+  },
   getAllUsersSchema: {
     summary: "see all users",
     description: "you can see all users info but you should be an admin",
