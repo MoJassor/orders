@@ -114,14 +114,11 @@ export default {
   updateUserProfileSchema: {
     summary: "Update profile",
     description:
-      "you can update your profile like your name, password and image_url attributes",
+      "you can update your profile like your name and password attributes",
     tags: ["User"],
     body: {
       type: "object",
       properties: {
-        image_url: {
-          type: "string",
-        },
         name: {
           type: "string",
         },

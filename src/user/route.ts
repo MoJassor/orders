@@ -51,7 +51,7 @@ async function router(app: FastifyInstance) {
       reply: FastifyReply
     ) => {
       const existUser = await userService.findUserByOptions({
-        phone: req.body.phone,
+        where: { phone: req.body.phone },
       });
       if (!existUser)
         return reply.code(404).send({ message: "User not found" });
@@ -129,7 +129,7 @@ async function router(app: FastifyInstance) {
     async (
       req:
         | FastifyRequest<{
-            Body: { password?: string; image_url?: string; name?: string };
+            Body: { password?: string; name?: string };
           }>
         | any,
       reply: FastifyReply
@@ -137,10 +137,7 @@ async function router(app: FastifyInstance) {
       const { password = null } = req.body;
       const user = await userService.findUserById(req.user.id);
       if (!user) return reply.code(404).send({ message: "user not found" });
-      console.log(password);
-
       if (password) req.body.password = await bcrypt.hash(password, 10);
-      console.log(req.body);
       await user.update(req.body);
       reply.code(200).send({ message: "user updated" });
     }
