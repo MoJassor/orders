@@ -52,8 +52,8 @@ User.init(
       unique: true,
       validate: {
         len: {
-          msg: "The phone number should be 10 to 14 characters",
-          args: [10, 14],
+          msg: "The phone number should be 10 characters",
+          args: [10, 10],
         },
         isNumeric: {
           msg: "The phone number should be a set of numbers",
