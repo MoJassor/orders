@@ -39,11 +39,18 @@ User.init(
     password: {
       type: DataTypes.STRING(225),
       allowNull: false,
+      validate: {
+        min: 8,
+      },
     },
     phone: {
       type: DataTypes.STRING(10),
       allowNull: false,
       unique: true,
+      validate: {
+        len: [10, 14],
+        isNumeric: true,
+      },
     },
     is_manager: {
       type: DataTypes.BOOLEAN,
