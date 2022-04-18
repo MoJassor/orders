@@ -31,6 +31,9 @@ CartItem.init(
     productQuantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        min: 1,
+      },
     },
 
     productPrice: {

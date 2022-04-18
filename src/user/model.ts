@@ -35,12 +35,15 @@ User.init(
     name: {
       type: DataTypes.STRING(50),
       allowNull: false,
+      validate: {
+        isAlpha: { msg: "The name should be a set of letters just" },
+      },
     },
     password: {
       type: DataTypes.STRING(225),
       allowNull: false,
       validate: {
-        min: 8,
+        min: 15,
       },
     },
     phone: {
@@ -48,8 +51,13 @@ User.init(
       allowNull: false,
       unique: true,
       validate: {
-        len: [10, 14],
-        isNumeric: true,
+        len: {
+          msg: "The phone number should be 10 to 14 characters",
+          args: [10, 14],
+        },
+        isNumeric: {
+          msg: "The phone number should be a set of numbers",
+        },
       },
     },
     is_manager: {

@@ -33,6 +33,9 @@ CartItemAccessory.init(
     partQuantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        min: 1,
+      },
     },
     partPrice: {
       type: DataTypes.INTEGER,

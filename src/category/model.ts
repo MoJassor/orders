@@ -34,11 +34,17 @@ Category.init(
       type: DataTypes.STRING(50),
       allowNull: false,
       unique: true,
+      validate: {
+        isAlpha: true,
+      },
     },
 
     image_url: {
       type: DataTypes.STRING(225),
       allowNull: false,
+      validate: {
+        isUrl: { msg: "the image_url must be a valid URL" },
+      },
     },
     is_visible: {
       type: DataTypes.BOOLEAN,

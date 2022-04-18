@@ -44,6 +44,9 @@ Accessory.init(
     image_url: {
       type: DataTypes.STRING(225),
       allowNull: true,
+      validate: {
+        isUrl: { msg: "the image_url must be a valid URL" },
+      },
     },
     price: {
       type: DataTypes.DOUBLE,

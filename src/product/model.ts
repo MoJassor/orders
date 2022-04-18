@@ -40,7 +40,6 @@ Product.init(
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-
     description: {
       type: DataTypes.STRING(225),
       allowNull: true,
@@ -48,6 +47,9 @@ Product.init(
     image_url: {
       type: DataTypes.STRING(225),
       allowNull: true,
+      validate: {
+        isUrl: { msg: "the image_url must be a valid URL" },
+      },
     },
     price: {
       type: DataTypes.DOUBLE,
